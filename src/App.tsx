@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { JSX, useState } from "react";
+import { JSX } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchGeocode, fetchWeather } from "./api";
@@ -58,12 +58,13 @@ function App(): JSX.Element {
                 {weather.daily_weather.slice(0, 5).map((day, index) => (
                   <div
                     key={index}
-                    className="p-4 bg-white rounded shadow md:mb-0 md:flex-1 text-center"
+                    className="p-2 bg-white rounded shadow md:mb-0 md:flex-1 text-center"
                   >
                     <p>
                       Day: {day.day} - {day.date}
                     </p>
-                    <p>Condition: {day.weather_code}</p>
+                    <div className="border h-20 w-20 mx-auto"></div>
+                    <p>{day.weather_code}</p>
                     <p>
                       Min: {day.temperature_2m_min}°C - Max:{" "}
                       {day.temperature_2m_max}°C

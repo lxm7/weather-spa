@@ -14,8 +14,6 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({
   color = "black",
 }) => {
   const IconComponent = weatherIconComponents[weatherCode] || WiDaySunny;
-  console.log({ IconComponent, weatherIconComponents, weatherCode });
-
   return <IconComponent size={size} color={color} />;
 };
 

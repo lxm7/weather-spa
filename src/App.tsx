@@ -57,12 +57,12 @@ function App(): JSX.Element {
           </div>
           {weather && (
             <>
-              <h2 className="text-2xl mb-2">5 day weather</h2>
+              <h2 className="text-2xl mb-2 text-center">5 day weather</h2>
               <div className="flex flex-col md:flex-row gap-4 justify-around">
                 {weather.daily_weather.slice(0, 5).map((day, index) => (
                   <div
                     key={index}
-                    className="p-2 bg-white rounded shadow md:mb-0 md:flex-1 text-center flex flex-col justify-evenly space-y-2 text-[12px]"
+                    className="p-2 bg-white rounded shadow md:mb-0 md:flex-1 text-center flex flex-col justify-evenly space-y-2 text-[13px] w-full max-w-[320px] md:max-w-none mx-auto md:mx-0"
                   >
                     <p className="font-bold">
                       {day.day} - {day.date}
@@ -70,7 +70,7 @@ function App(): JSX.Element {
                     <div className="mx-auto">
                       <WeatherIcon
                         weatherCode={day.raw_weather_code}
-                        size={40}
+                        size={50}
                         color="#0369a1"
                       />
                     </div>

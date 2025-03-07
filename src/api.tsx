@@ -5,8 +5,6 @@ const makeDate = (unixTime: number) => new Date(unixTime * 1000);
 const mathRound = (value: number) => Math.round(value);
 
 export const transformDailyWeather = (data: WeatherResponse) => {
-  console.log(data);
-
   return data.daily.time.map((unixTime: number, index: number) => ({
     date: makeDate(unixTime).toLocaleDateString(),
     day: makeDate(unixTime).toLocaleDateString("en-US", {

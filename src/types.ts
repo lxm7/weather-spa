@@ -14,6 +14,7 @@ export type WeatherData = {
 type WeatherKeys =
   | "time"
   | "weather_code"
+  | "raw_weather_code"
   | "temperature_2m_max"
   | "temperature_2m_min"
   | "wind_speed_10m_max";

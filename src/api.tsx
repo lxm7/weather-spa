@@ -1,19 +1,22 @@
 import { GeocodeResult, WeatherData, WeatherResponse } from "./types";
 import { weatherCodeMapping } from "./weatherCodes";
 
+const makeDate = (unixTime: number) => new Date(unixTime * 1000);
+const mathRound = (value: number) => Math.round(value);
+
 export const transformDailyWeather = (data: WeatherResponse) => {
   console.log(data);
 
   return data.daily.time.map((unixTime: number, index: number) => ({
-    date: new Date(unixTime * 1000).toLocaleDateString(),
-    day: new Date(unixTime * 1000).toLocaleDateString("en-US", {
+    date: makeDate(unixTime).toLocaleDateString(),
+    day: makeDate(unixTime).toLocaleDateString("en-US", {
       weekday: "long",
     }),
-    // weather_code: data.daily.weather_code[index],
+    raw_weather_code: data.daily.weather_code[index], // numeric weather code
     weather_code: weatherCodeMapping[data.daily.weather_code[index]],
-    temperature_2m_max: data.daily.temperature_2m_max[index],
-    temperature_2m_min: data.daily.temperature_2m_min[index],
-    wind_speed_10m_max: data.daily.wind_speed_10m_max[index],
+    temperature_2m_max: mathRound(data.daily.temperature_2m_max[index]),
+    temperature_2m_min: mathRound(data.daily.temperature_2m_min[index]),
+    wind_speed_10m_max: mathRound(data.daily.wind_speed_10m_max[index]),
   }));
 };
 

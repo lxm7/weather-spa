@@ -7,6 +7,7 @@ import { fetchGeocode, fetchWeather } from "./api";
 import { GeocodeResult } from "./types";
 import SearchForm from "./SearchForm";
 import { useSearchStore } from "./store";
+import WeatherIcon from "./WeatherIcon";
 
 function App(): JSX.Element {
   const { selectedLocationId, confirmedSearch } = useSearchStore();
@@ -48,9 +49,12 @@ function App(): JSX.Element {
       <main className="flex-1 min-h-[calc(100vh-68px)] bg-[url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center p-4">
         <div className="max-w-4xl mx-auto">
           <SearchForm locations={locations} />
-
-          {selectedLocation && weatherLoading && <p>Loading weather data...</p>}
-          {weatherError && <p>Error loading weather data.</p>}
+          <div className="text-center p-4">
+            {selectedLocation && weatherLoading && (
+              <p>Loading weather data...</p>
+            )}
+            {weatherError && <p>Error loading weather data.</p>}
+          </div>
           {weather && (
             <>
               <h2 className="text-2xl mb-2">5 day weather</h2>
@@ -58,12 +62,18 @@ function App(): JSX.Element {
                 {weather.daily_weather.slice(0, 5).map((day, index) => (
                   <div
                     key={index}
-                    className="p-2 bg-white rounded shadow md:mb-0 md:flex-1 text-center"
+                    className="p-2 bg-white rounded shadow md:mb-0 md:flex-1 text-center flex flex-col justify-evenly space-y-2 text-[12px]"
                   >
-                    <p>
-                      Day: {day.day} - {day.date}
+                    <p className="font-bold">
+                      {day.day} - {day.date}
                     </p>
-                    <div className="border h-20 w-20 mx-auto"></div>
+                    <div className="mx-auto">
+                      <WeatherIcon
+                        weatherCode={day.raw_weather_code}
+                        size={40}
+                        color="#0369a1"
+                      />
+                    </div>
                     <p>{day.weather_code}</p>
                     <p>
                       Min: {day.temperature_2m_min}°C - Max:{" "}

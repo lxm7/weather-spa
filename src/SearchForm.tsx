@@ -35,12 +35,12 @@ const SearchForm: React.FC<SearchFormProps> = ({ locations }) => {
           type="text"
           placeholder="Enter a location..."
           aria-label="Enter a location"
-          className="p-2 border rounded mr-2 bg-sky-100"
+          className="p-2 border rounded bg-sky-100 text-center"
         />
         {/* Render the select only if locations are provided */}
         {locations && locations.length > 0 && (
           <div className="mt-4">
-            <label htmlFor="locationSelect" className="sr-only mr-2">
+            <label htmlFor="locationSelect" className="sr-only">
               Select a location:
             </label>
             <select

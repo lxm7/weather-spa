@@ -1,22 +1,25 @@
+import { useState } from "react";
 import { useSearchStore } from "./store";
 import { GeocodeResult } from "./types";
 
-const SearchForm = ({ locations }) => {
-  const {
-    searchTerm,
-    setSearchTerm,
-    setConfirmedSearch,
-    setSelectedLocationId,
-  } = useSearchStore();
+export interface SearchFormProps {
+  locations?: GeocodeResult[];
+}
+
+const SearchForm: React.FC<SearchFormProps> = ({ locations }) => {
+  const { setSearchTerm, setConfirmedSearch, setSelectedLocationId } =
+    useSearchStore();
+  // Local state for the input so that we don't call the global setter on each keystroke
+  const [localInput, setLocalInput] = useState("");
 
   return (
     <div className="text-center mb-4">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          // When the form submits (by pressing Enter in the text input),
-          // set the confirmed search and reset any previously selected location.
-          setConfirmedSearch(searchTerm);
+          // On submit, update the global store with the final input value
+          setSearchTerm(localInput);
+          setConfirmedSearch(localInput);
           setSelectedLocationId(null);
         }}
         className="text-center mb-4"
@@ -27,14 +30,14 @@ const SearchForm = ({ locations }) => {
         </label>
         <input
           id="locationInput"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={localInput}
+          onChange={(e) => setLocalInput(e.target.value)}
           type="text"
           placeholder="Enter a location..."
           aria-label="Enter a location"
           className="p-2 border rounded mr-2 bg-sky-100"
         />
-        {/* Render the select only if locations are available */}
+        {/* Render the select only if locations are provided */}
         {locations && locations.length > 0 && (
           <div className="mt-4">
             <label htmlFor="locationSelect" className="sr-only mr-2">
